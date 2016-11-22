@@ -2,7 +2,7 @@
   "name": "edit-distance",
   "version": "0.0.1",
   "description": "String and tree edit distance",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha",
     "build": "node_modules/.bin/coffee --bare -o lib -c src"
@@ -19,5 +19,13 @@
     "mocha": "^3.1.2"
   },
   "author": "Christoph Schulz <schulzcbs@gmail.com>",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/schulzch/edit-distance",
+  "bugs": {
+    "url": "https://github.com/schulzch/edit-distance/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/schulzch/edit-distance.git"
+  }
 }

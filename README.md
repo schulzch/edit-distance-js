@@ -1,22 +1,20 @@
-# edit-distance.js
+# edit-distance.js [![NPM version](https://badge.fury.io/js/edit-distance.png)](http://badge.fury.io/js/edit-distance) 
 
-`edit-distance.js` computes the [tree edit distance](https://en.wikipedia.org/wiki/Edit_distance) between two given trees.
+`edit-distance.js` computes the string and tree [edit distance](https://en.wikipedia.org/wiki/Edit_distance).
 
 The Zhang-Shasha algorithm [1] used for trees has a worst-case complexity of `O(n⁴)`, which could be reduced to `O(n³)` using the [APTED](http://tree-edit-distance.dbresearch.uni-salzburg.at/) algorithm [2].
 
+TODO: Levenshtein
+
 ## Installation
 
-<!--
     $ npm install edit-distance 
--->
 
 ## Usage
 
-<!--
-var distance = require('ted');
--->
-
 ```javascript
+var distance = require('edit-distance');
+
 var children = function(node) { return node.children; };
 var insert = remove = function(node) { return 1; };
 var update = function(nodeA, nodeB) { return nodeA.id !== nodeB.id ? 1 : 0; };
@@ -25,8 +23,6 @@ var rootA = {id: 1, children: [{id: 2}, {id: 3}]};
 var rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]};
 console.log(distance(rootA, rootB, children, insert, remove, update));
 ```
-
-TODO: Levenshtein
 
 ## References
 
