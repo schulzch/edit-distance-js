@@ -35,12 +35,12 @@ postOrderWalk = (root, childrenCb, visitCb) ->
 #
 # @example
 #
-# rootA = {id: 1, children: [{id: 2}, {id: 3}]}
-# rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]}
-# children = function(node) { return node.children; }
-# insert = remove = function(node) { return 1; }
-# update = function(nodeA, nodeB) { return nodeA.id !== nodeB.id ? 1 : 0; }
-# distance(rootA, rootB, children, insert, remove, update);
+# var rootA = {id: 1, children: [{id: 2}, {id: 3}]};
+# var rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]};
+# var children = function(node) { return node.children; };
+# var insert = remove = function(node) { return 1; };
+# var update = function(nodeA, nodeB) { return nodeA.id !== nodeB.id ? 1 : 0; };
+# console.log(distance(rootA, rootB, children, insert, remove, update));
 #
 # @see Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the
 # editing distance between trees and related problems." SIAM journal on
