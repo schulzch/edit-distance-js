@@ -1,5 +1,5 @@
 should = require('chai').should()
-distance = require '../src/index'
+distance = require('../src/index').ted
 fs = require 'fs'
 
 #
