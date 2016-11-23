@@ -4,8 +4,9 @@
   "description": "String and tree edit distance",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha",
-    "build": "node_modules/.bin/coffee --bare -o lib -c src"
+    "test": "mocha",
+    "build": "coffee --no-header --bare --output lib --compile src",
+    "bundle": "browserify lib --standalone edit-distance --outfile edit-distance.js"
   },
   "keywords": [
     "string",
@@ -14,6 +15,7 @@
     "metric"
   ],
   "devDependencies": {
+    "browserify": "^13.1.1",
     "chai": "^3.5.0",
     "coffee-script": "^1.11.1",
     "mocha": "^3.1.2"

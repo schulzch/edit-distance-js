@@ -1,3 +1,6 @@
+# Compiled code
+lib/*.js
+
 # Logs
 logs
 *.log
