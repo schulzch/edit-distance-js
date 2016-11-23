@@ -37,6 +37,10 @@ postOrderWalk = (root, childrenCb, visitCb) ->
 # editing distance between trees and related problems." SIAM journal on
 # computing 18.6 (1989): 1245-1262.
 #
+# Could be improved using:
+# @see Pawlik, Mateusz, and Nikolaus Augsten. "Tree edit distance: Robust and
+# memory-efficient." Information Systems 56 (2016): 157-173.
+#
 distance = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 	preprocess = (root) ->
 		t = {

@@ -1,10 +1,6 @@
 # edit-distance.js [![NPM version](https://badge.fury.io/js/edit-distance.png)](http://badge.fury.io/js/edit-distance) 
 
-`edit-distance.js` computes the string and tree [edit distance](https://en.wikipedia.org/wiki/Edit_distance).
-
-The Zhang-Shasha algorithm [1] used for trees has a worst-case complexity of `O(n⁴)`, which could be reduced to `O(n³)` using the [APTED](http://tree-edit-distance.dbresearch.uni-salzburg.at/) algorithm [2].
-
-TODO: Levenshtein
+`edit-distance.js` computes the [edit distance](https://en.wikipedia.org/wiki/Edit_distance) for strings and trees.
 
 ## Installation
 
@@ -13,22 +9,32 @@ TODO: Levenshtein
 ## Usage
 
 ```javascript
-var distance = require('edit-distance');
+var distance, insert, remove, update, rootA, rootB, children, stringA, stringB;
 
-var children = function(node) { return node.children; };
-var insert = remove = function(node) { return 1; };
-var update = function(nodeA, nodeB) { return nodeA.id !== nodeB.id ? 1 : 0; };
+distance = require('edit-distance');
 
-var rootA = {id: 1, children: [{id: 2}, {id: 3}]};
-var rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]};
-console.log(distance(rootA, rootB, children, insert, remove, update));
+insert = remove = function(node) { return 1; };
+
+stringA = "abcdef";
+stringB = "abdfgh";
+update = function(stringA, stringB) { return stringA !== stringB ? 1 : 0; };
+console.log(distance.lev(stringA, stringB, insert, remove, update));
+
+rootA = {id: 1, children: [{id: 2}, {id: 3}]};
+rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]};
+children = function(node) { return node.children; };
+update = function(nodeA, nodeB) { return nodeA.id !== nodeB.id ? 1 : 0; };
+console.log(distance.ted(rootA, rootB, children, insert, remove, update));
+
 ```
 
 ## References
 
-[1] Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the editing distance between trees and related problems." SIAM journal on computing 18.6 (1989): 1245-1262.
+[1] Levenshtein, Vladimir I. "Binary codes capable of correcting deletions, insertions and reversals." Soviet physics doklady. Vol. 10. 1966.
 
-[2] Pawlik, Mateusz, and Nikolaus Augsten. "Tree edit distance: Robust and memory-efficient." Information Systems 56 (2016): 157-173.
+[2] Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the editing distance between trees and related problems." SIAM journal on computing 18.6 (1989): 1245-1262.
+
+[3] Pawlik, Mateusz, and Nikolaus Augsten. "Tree edit distance: Robust and memory-efficient." Information Systems 56 (2016): 157-173.
 
 ## License
 
