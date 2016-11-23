@@ -60,6 +60,7 @@ describe 'Tree Edit Distance', ->
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d,e)c)f", 2
 
 	describe 'should be performant', ->
+		@slow(1)
 		@timeout(60 * 1000)
 
 		ncbiTree = {}

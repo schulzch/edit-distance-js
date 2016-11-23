@@ -83,13 +83,13 @@ distance = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 		n = j - bL[j] + 2
 
 		fdist = fill(m, n, 0)
-		for a in [1...m]
+		for a in [1...m] by 1
 			fdist[a][0] = fdist[a - 1][0] + removeCb(aN[a + iOff])
-		for b in [1...n]
+		for b in [1...n] by 1
 			fdist[0][b] = fdist[0][b - 1] + insertCb(bN[b + jOff])
 
-		for a in [1...m]
-			for b in [1...n]
+		for a in [1...m] by 1
+			for b in [1...n] by 1
 				if aL[i] is aL[a + iOff] and bL[j] is bL[b + jOff]
 					tdist[a + iOff][b + jOff] = fdist[a][b] = min(
 						fdist[a - 1][b] + removeCb(aN[a + iOff]),
