@@ -1,6 +1,6 @@
 # edit-distance.js [![NPM version](https://badge.fury.io/js/edit-distance.png)](http://badge.fury.io/js/edit-distance) 
 
-`edit-distance.js` computes the [edit distance](https://en.wikipedia.org/wiki/Edit_distance) for strings and trees.
+`edit-distance.js` computes the [edit distance](https://en.wikipedia.org/wiki/Edit_distance) for strings [1, 2] and trees [3].
 
 ## Installation
 
@@ -32,7 +32,9 @@ console.log(distance.ted(rootA, rootB, children, insert, remove, update));
 
 [1] Levenshtein, Vladimir I. "Binary codes capable of correcting deletions, insertions and reversals." Soviet physics doklady. Vol. 10. 1966.
 
-[2] Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the editing distance between trees and related problems." SIAM journal on computing 18.6 (1989): 1245-1262.
+[2] Wagner, Robert A., and Michael J. Fischer. "The string-to-string correction problem." Journal of the ACM (JACM) 21.1 (1974): 168-173.
+
+[3] Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the editing distance between trees and related problems." SIAM journal on computing 18.6 (1989): 1245-1262.
 
 ## License
 

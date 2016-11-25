@@ -15,6 +15,8 @@ alignment = () ->
 #
 # @see Levenshtein, Vladimir I. "Binary codes capable of correcting deletions,
 # insertions and reversals." Soviet physics doklady. Vol. 10. 1966.
+# @see Wagner, Robert A., and Michael J. Fischer. "The string-to-string 
+# correction problem." Journal of the ACM (JACM) 21.1 (1974): 168-173.
 #
 levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 	a = stringA
