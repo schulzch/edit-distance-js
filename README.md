@@ -34,8 +34,6 @@ console.log(distance.ted(rootA, rootB, children, insert, remove, update));
 
 [2] Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the editing distance between trees and related problems." SIAM journal on computing 18.6 (1989): 1245-1262.
 
-[3] Pawlik, Mateusz, and Nikolaus Augsten. "Tree edit distance: Robust and memory-efficient." Information Systems 56 (2016): 157-173.
-
 ## License
 
 Licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). Copyright &copy; 2016 Christoph Schulz.

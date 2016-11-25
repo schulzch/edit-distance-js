@@ -3,7 +3,7 @@ distance = require('../src/index').ted
 fs = require 'fs'
 
 #
-# Parse a tree in pre-order Newick-style format.
+# Parse a tree in post-order Newick-style format.
 #
 parseTree = (string) ->
 	ancestors = []

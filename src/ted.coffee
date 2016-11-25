@@ -61,7 +61,7 @@ distance = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 			unless firstChild?
 				lldIndex = nIndex
 			else
-				# XXX: we are wasting O(1) here with O(n).
+				# XXX: replace O(n) lookup with O(1) lookup using node decorator?
 				childIndex = t.nodes.indexOf(firstChild)
 				lldIndex = t.llds[childIndex]
 			t.llds.push lldIndex
