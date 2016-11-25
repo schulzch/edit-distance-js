@@ -1,5 +1,5 @@
 should = require('chai').should()
-distance = require('../src/index').lev
+levenshtein = require('../src/index').levenshtein
 
 describe 'Levenshtein Distance', ->
 	update = (charA, charB) -> if charA isnt charB then 1 else 0
@@ -8,9 +8,9 @@ describe 'Levenshtein Distance', ->
 	describe 'should be correct', ->
 		shouldBeSymmetrical = (stringA, stringB, expected) ->
 			it stringA + " ↔ " + stringB, ->
-				actualAB = distance(stringA, stringB, insert, remove, update)
+				actualAB = levenshtein(stringA, stringB, insert, remove, update).distance
 				actualAB.should.equal(expected, 'A → B')
-				actualBA = distance(stringB, stringA, insert, remove, update)
+				actualBA = levenshtein(stringB, stringA, insert, remove, update).distance
 				actualBA.should.equal(expected, 'B → A')
 
 		shouldBeSymmetrical 'a', '', 1
@@ -19,6 +19,7 @@ describe 'Levenshtein Distance', ->
 		shouldBeSymmetrical 'a', 'ab', 1
 		shouldBeSymmetrical 'ac', 'abc', 1
 		shouldBeSymmetrical 'abc', 'adc', 1
+		#TODO: test mapping.
 
 	describe 'should be performant', ->
 		@slow(1)
@@ -29,7 +30,7 @@ describe 'Levenshtein Distance', ->
 			it 'N = ' + n, ->
 				stringA = createString n, 'a'
 				stringB = createString n, 'b'
-				expected = distance(stringA, stringB, insert, remove, update)
+				expected = levenshtein(stringA, stringB, insert, remove, update).distance
 				expected.should.equal n
 
 		shouldRunFast 2048

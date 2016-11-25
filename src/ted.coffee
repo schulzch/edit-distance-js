@@ -1,5 +1,8 @@
-{fill, min} = require './util'
+{fill, trackedMin} = require './util'
 
+#
+# Do a post-order walk of a given tree.
+#
 postOrderWalk = (root, childrenCb, visitCb) ->
 	# Create stacks
 	stack1 = []
@@ -23,6 +26,43 @@ postOrderWalk = (root, childrenCb, visitCb) ->
 	return
 
 #
+# Computes the alignment from the tracking table.
+#
+alignment = (tA, tB, ttrack) -> () ->
+	mapping = []
+	alignmentA = []
+	alignmentB = []
+	# Backtrack solution from lower right to upper left.
+	i = tA.nodes.length - 1
+	j = tB.nodes.length - 1
+	while i >= 0 and j >= 0
+		switch ttrack[i][j]
+			when 0
+				# Remove
+				mapping.push [tA.nodes[i], null]
+				alignmentA[i] = null
+				--i
+			when 1
+				 # Insert
+				mapping.push [null, tB.nodes[j ]]
+				alignmentB[j] = null
+				--j
+			when 2 
+				# Update
+				mapping.push [tA.nodes[i], tB.nodes[j]]
+				alignmentA[i] = tB.nodes[j]
+				alignmentB[j] = tA.nodes[i]
+				--i
+				--j
+			else
+				throw new Error "Invalid operation #{ttrack[i][j]} at (#{i}, #{j})"
+	return {
+		mapping: mapping,
+		alignmentA: alignmentA
+		alignmentB: alignmentB
+	}
+
+#
 # Computes the tree edit distance (TED).
 #
 # @example
@@ -41,7 +81,7 @@ postOrderWalk = (root, childrenCb, visitCb) ->
 # @see Pawlik, Mateusz, and Nikolaus Augsten. "Tree edit distance: Robust and
 # memory-efficient." Information Systems 56 (2016): 157-173.
 #
-distance = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
+ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 	preprocess = (root) ->
 		t = {
 			# Nodes in post-order.
@@ -86,23 +126,25 @@ distance = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 		m = i - aL[i] + 2
 		n = j - bL[j] + 2
 
+		# Minimize from upper left to lower right (dynamic programming, see paper).
 		fdist = fill(m, n, 0)
 		for a in [1...m] by 1
 			fdist[a][0] = fdist[a - 1][0] + removeCb(aN[a + iOff])
 		for b in [1...n] by 1
 			fdist[0][b] = fdist[0][b - 1] + insertCb(bN[b + jOff])
-
 		for a in [1...m] by 1
 			for b in [1...n] by 1
 				if aL[i] is aL[a + iOff] and bL[j] is bL[b + jOff]
-					tdist[a + iOff][b + jOff] = fdist[a][b] = min(
+					min = trackedMin(
 						fdist[a - 1][b] + removeCb(aN[a + iOff]),
 						fdist[a][b - 1] + insertCb(bN[b + jOff]),
 						fdist[a - 1][b - 1] + updateCb(aN[a + iOff], bN[b + jOff]))
+					tdist[a + iOff][b + jOff] = fdist[a][b] = min.value
+					ttrack[a + iOff][b + jOff] = min.index
 				else
 					p = aL[a + iOff] - 1 - iOff
 					q = bL[b + jOff] - 1 - jOff
-					fdist[a][b] = min(
+					fdist[a][b] = Math.min(
 						fdist[a - 1][b] + removeCb(aN[a + iOff]),
 						fdist[a][b - 1] + insertCb(bN[b + jOff]),
 						fdist[p][q] + tdist[a + iOff][b + jOff])
@@ -111,11 +153,16 @@ distance = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 	tA = preprocess rootA
 	tB = preprocess rootB
 	tdist = fill(tA.nodes.length, tB.nodes.length, 0)
+	ttrack = fill(tA.nodes.length, tB.nodes.length, -1)
 
+	# Iterate keyroots.
 	for i in tA.keyroots
 		for j in tB.keyroots
 			treeDistance i, j
 
-	return tdist[tA.nodes.length - 1][tB.nodes.length - 1]
+	return {
+		distance: tdist[tA.nodes.length - 1][tB.nodes.length - 1]
+		alignment: alignment(tA, tB, ttrack)
+	}
 
-module.exports = distance
+module.exports = ted

@@ -5,5 +5,11 @@ module.exports.fill = (width, height, value) ->
 	x[i] = y.slice(0) for i in [0...width]
 	return x
 
-module.exports.min = (a, b, c) ->
-	Math.min(Math.min(a, b), c)
+module.exports.trackedMin = (values...) ->
+	min = {value: values[0], index: 0}
+	for index in [1...values.length] by 1
+		value = values[index]
+		if value < min.value
+			min.value = value
+			min.index = index
+	return min

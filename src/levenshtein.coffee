@@ -1,4 +1,7 @@
-{fill, min} = require './util'
+{fill} = require './util'
+
+alignment = () ->
+	throw new Error "NYI"
 
 #
 # Computes the Levenshtein distance (lev).
@@ -13,7 +16,7 @@
 # @see Levenshtein, Vladimir I. "Binary codes capable of correcting deletions,
 # insertions and reversals." Soviet physics doklady. Vol. 10. 1966.
 #
-distance = (stringA, stringB, insertCb, removeCb, updateCb) ->
+levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 	a = stringA
 	b = stringB
 
@@ -27,11 +30,14 @@ distance = (stringA, stringB, insertCb, removeCb, updateCb) ->
 		for j in [1..b.length] by 1
 			aC = a.charAt(i - 1)
 			bC = b.charAt(j - 1)
-			dist[i][j] = min(
+			dist[i][j] = Math.min(
 				 dist[i - 1][j] + removeCb(aC),
 				 dist[i][j - 1] + insertCb(bC),
 				 dist[i - 1][j - 1] + updateCb(aC, bC))
 
-	return dist[a.length][b.length]
+	return {
+		distance: dist[a.length][b.length]
+		alignment: alignment
+	}
 
-module.exports = distance
+module.exports = levenshtein

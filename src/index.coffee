@@ -1,3 +1,3 @@
 module.exports =
 	ted: require './ted'
-	lev: require './lev'
+	levenshtein: require './levenshtein'

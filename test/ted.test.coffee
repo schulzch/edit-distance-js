@@ -1,5 +1,5 @@
 should = require('chai').should()
-distance = require('../src/index').ted
+ted = require('../src/index').ted
 fs = require 'fs'
 
 #
@@ -36,11 +36,12 @@ describe 'Tree Edit Distance', ->
 			it stringA + " ↔ " + stringB, ->
 				treeA = parseTree stringA
 				treeB = parseTree stringB
-				actualAB = distance(treeA, treeB, children, insert, remove, update)
+				actualAB = ted(treeA, treeB, children, insert, remove, update).distance
 				actualAB.should.equal(expected, 'A → B')
-				actualBA = distance(treeB, treeA, children, insert, remove, update)
+				actualBA = ted(treeB, treeA, children, insert, remove, update).distance
 				actualBA.should.equal(expected, 'B → A')
 
+		#XXX: test "a", null ?
 		shouldBeSymmetrical "a", "a", 0
 		shouldBeSymmetrical "a", "b", 1
 		shouldBeSymmetrical "(b)a", "b", 1
@@ -58,6 +59,7 @@ describe 'Tree Edit Distance', ->
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,e)f", 2
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,x)f", 3
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d,e)c)f", 2
+		#TODO: test mapping
 
 	describe 'should be performant', ->
 		@slow(1)
@@ -72,5 +74,5 @@ describe 'Tree Edit Distance', ->
 
 		it 'NCBI taxonomy', ->
 			otherTree = parseTree "a"
-			expected = distance(ncbiTree, otherTree, children, insert, remove, update)
+			expected = ted(ncbiTree, otherTree, children, insert, remove, update).distance
 			expected.should.equal 311349
