@@ -8,24 +8,48 @@
 
 ## Usage
 
+[Node.js](https://nodejs.org/) and [Require.js](http://requirejs.org/) version:
+
 ```javascript
-var distance, insert, remove, update, rootA, rootB, children, stringA, stringB;
+var ed = require('edit-distance');
+//Browserify version only, without module loader:
+//var ed = global.editDistance;
+```
 
-distance = require('edit-distance');
 
+### Levenshtein Distance
+
+```javascript
+// Define cost functions.
+var insert, remove, update;
 insert = remove = function(node) { return 1; };
-
-stringA = "abcdef";
-stringB = "abdfgh";
 update = function(stringA, stringB) { return stringA !== stringB ? 1 : 0; };
-console.log(distance.lev(stringA, stringB, insert, remove, update));
 
-rootA = {id: 1, children: [{id: 2}, {id: 3}]};
-rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]};
-children = function(node) { return node.children; };
+// Define two strings.
+var stringA = "abcdef";
+var stringB = "abdfgh";
+
+// Compute edit distance and alignment.
+var lev = ed.levenshtein(stringA, stringB, insert, remove, update);
+console.log('Levenshtein', lev.distance, lev.alignment());
+```
+
+### Tree Edit Distance
+
+```javascript
+// Define cost functions.
+var insert, remove, update;
+insert = remove = function(node) { return 1; };
 update = function(nodeA, nodeB) { return nodeA.id !== nodeB.id ? 1 : 0; };
-console.log(distance.ted(rootA, rootB, children, insert, remove, update));
 
+// Define two trees.
+var rootA = {id: 1, children: [{id: 2}, {id: 3}]};
+var rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]};
+var children = function(node) { return node.children; };
+
+// Compute edit distance and alignment.
+var ted = ed.ted(rootA, rootB, children, insert, remove, update);
+console.log('Tree Edit Distance', ted.distance, ted.alignment());
 ```
 
 ## References
