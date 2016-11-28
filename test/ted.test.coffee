@@ -41,7 +41,6 @@ describe 'Tree Edit Distance', ->
 				actualBA = ted(treeB, treeA, children, insert, remove, update).distance
 				actualBA.should.equal(expected, 'B → A')
 
-		#XXX: test "a", null ?
 		shouldBeSymmetrical "a", "a", 0
 		shouldBeSymmetrical "a", "b", 1
 		shouldBeSymmetrical "(b)a", "b", 1
@@ -61,7 +60,8 @@ describe 'Tree Edit Distance', ->
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d,e)c)f", 2
 		#TODO: test mapping
 
-	describe 'should be performant', ->
+	describeBenchmark = if process.env.BENCHMARK then describe else describe.skip
+	describeBenchmark 'should be performant', ->
 		@slow(1)
 		@timeout(60 * 1000)
 

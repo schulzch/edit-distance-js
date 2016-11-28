@@ -21,7 +21,8 @@ describe 'Levenshtein Distance', ->
 		shouldBeSymmetrical 'abc', 'adc', 1
 		#TODO: test mapping.
 
-	describe 'should be performant', ->
+	describeBenchmark = if process.env.BENCHMARK then describe else describe.skip
+	describeBenchmark 'should be performant', ->
 		@slow(1)
 		@timeout(60 * 1000)
 		createString = (n, char) -> Array(n + 1).join(char)
