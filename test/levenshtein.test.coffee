@@ -8,10 +8,10 @@ describe 'Levenshtein Distance', ->
 	describe 'should be correct', ->
 		shouldBeSymmetrical = (stringA, stringB, expected) ->
 			it stringA + " ↔ " + stringB, ->
-				actualAB = levenshtein(stringA, stringB, insert, remove, update).distance
-				actualAB.should.equal(expected, 'A → B')
-				actualBA = levenshtein(stringB, stringA, insert, remove, update).distance
-				actualBA.should.equal(expected, 'B → A')
+				actualAB = levenshtein(stringA, stringB, insert, remove, update)
+				actualAB.distance.should.equal(expected, 'A → B')
+				actualBA = levenshtein(stringB, stringA, insert, remove, update)
+				actualBA.distance.should.equal(expected, 'B → A')
 
 		shouldBeSymmetrical 'a', '', 1
 		shouldBeSymmetrical 'a', 'a', 0
@@ -31,8 +31,8 @@ describe 'Levenshtein Distance', ->
 			it 'N = ' + n, ->
 				stringA = createString n, 'a'
 				stringB = createString n, 'b'
-				expected = levenshtein(stringA, stringB, insert, remove, update).distance
-				expected.should.equal n
+				expected = levenshtein(stringA, stringB, insert, remove, update)
+				expected.distance.should.equal n
 
 		shouldRunFast 2048
 		shouldRunFast 4096

@@ -1,7 +1,7 @@
 {fill, trackedMin} = require './util'
 
 #
-# Do a post-order walk of a given tree.
+# Implements a post-order walk of a given tree.
 #
 postOrderWalk = (root, childrenCb, visitCb) ->
 	# Create stacks
@@ -24,43 +24,6 @@ postOrderWalk = (root, childrenCb, visitCb) ->
 		[index, node, firstChild] = stack2.pop()
 		visitCb index, node, firstChild
 	return
-
-#
-# Computes the alignment from the tracking table.
-#
-alignment = (tA, tB, ttrack) -> () ->
-	mapping = []
-	alignmentA = []
-	alignmentB = []
-	# Backtrack solution from lower right to upper left.
-	i = tA.nodes.length - 1
-	j = tB.nodes.length - 1
-	while i >= 0 and j >= 0
-		switch ttrack[i][j]
-			when 0
-				# Remove
-				mapping.push [tA.nodes[i], null]
-				alignmentA[i] = null
-				--i
-			when 1
-				 # Insert
-				mapping.push [null, tB.nodes[j ]]
-				alignmentB[j] = null
-				--j
-			when 2 
-				# Update
-				mapping.push [tA.nodes[i], tB.nodes[j]]
-				alignmentA[i] = tB.nodes[j]
-				alignmentB[j] = tA.nodes[i]
-				--i
-				--j
-			else
-				throw new Error "Invalid operation #{ttrack[i][j]} at (#{i}, #{j})"
-	return {
-		mapping: mapping,
-		alignmentA: alignmentA
-		alignmentB: alignmentB
-	}
 
 #
 # Computes the tree edit distance (TED).
@@ -163,6 +126,43 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 	return {
 		distance: tdist[tA.nodes.length - 1][tB.nodes.length - 1]
 		alignment: alignment(tA, tB, ttrack)
+	}
+
+#
+# Computes the tree alignment and mapping.
+#
+alignment = (tA, tB, ttrack) -> () ->
+	mapping = []
+	alignmentA = []
+	alignmentB = []
+	# Backtrack solution from lower right to upper left.
+	i = tA.nodes.length - 1
+	j = tB.nodes.length - 1
+	while i >= 0 and j >= 0
+		switch ttrack[i][j]
+			when 0
+				# Remove
+				mapping.push [tA.nodes[i], null]
+				alignmentA[i] = null
+				--i
+			when 1
+				 # Insert
+				mapping.push [null, tB.nodes[j]]
+				alignmentB[j] = null
+				--j
+			when 2 
+				# Update
+				mapping.push [tA.nodes[i], tB.nodes[j]]
+				alignmentA[i] = tB.nodes[j]
+				alignmentB[j] = tA.nodes[i]
+				--i
+				--j
+			else
+				throw new Error "Invalid operation #{ttrack[i][j]} at (#{i}, #{j})"
+	return {
+		mapping: mapping,
+		alignmentA: alignmentA
+		alignmentB: alignmentB
 	}
 
 module.exports = ted

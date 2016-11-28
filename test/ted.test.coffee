@@ -36,10 +36,10 @@ describe 'Tree Edit Distance', ->
 			it stringA + " ↔ " + stringB, ->
 				treeA = parseTree stringA
 				treeB = parseTree stringB
-				actualAB = ted(treeA, treeB, children, insert, remove, update).distance
-				actualAB.should.equal(expected, 'A → B')
-				actualBA = ted(treeB, treeA, children, insert, remove, update).distance
-				actualBA.should.equal(expected, 'B → A')
+				actualAB = ted(treeA, treeB, children, insert, remove, update)
+				actualAB.distance.should.equal(expected, 'A → B')
+				actualBA = ted(treeB, treeA, children, insert, remove, update)
+				actualBA.distance.should.equal(expected, 'B → A')
 
 		shouldBeSymmetrical "a", "a", 0
 		shouldBeSymmetrical "a", "b", 1
@@ -74,5 +74,5 @@ describe 'Tree Edit Distance', ->
 
 		it 'NCBI taxonomy', ->
 			otherTree = parseTree "a"
-			expected = ted(ncbiTree, otherTree, children, insert, remove, update).distance
-			expected.should.equal 311349
+			expected = ted(ncbiTree, otherTree, children, insert, remove, update)
+			expected.distance.should.equal 311349
