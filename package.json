@@ -5,6 +5,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "mocha",
+    "test:trace": "mocha --trace-deopt --trace-opt > trace.log",
     "build": "coffee --no-header --bare --output lib --compile src",
     "bundle": "browserify lib --standalone edit-distance --outfile edit-distance.js"
   },

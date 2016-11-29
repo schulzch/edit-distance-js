@@ -116,7 +116,7 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 	tA = preprocess rootA
 	tB = preprocess rootB
 	tdist = fill(tA.nodes.length, tB.nodes.length, 0)
-	ttrack = fill(tA.nodes.length, tB.nodes.length, -1)
+	ttrack = fill(tA.nodes.length, tB.nodes.length, 0)
 
 	# Iterate keyroots.
 	for i in tA.keyroots

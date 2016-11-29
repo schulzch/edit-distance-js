@@ -20,7 +20,7 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 	b = stringB
 
 	dist = fill a.length + 1, b.length + 1, 0
-	track = fill a.length + 1, b.length + 1, -1
+	track = fill a.length + 1, b.length + 1, 0
 	for i in [1..a.length] by 1
 		dist[i][0] = i
 	for j in [1..b.length] by 1
