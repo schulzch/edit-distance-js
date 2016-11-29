@@ -1,8 +1,9 @@
-module.exports.fill = (width, height, value) ->
-	y = new Array(height)
-	y[i] = value for i in [0...height]
+module.exports.zero = (width, height) ->
 	x = new Array(width)
-	x[i] = y.slice(0) for i in [0...width]
+	for i in [0...width] by 1
+		y = x[i] = new Array(height)
+		for j in [0...height] by 1
+			y[j] = 0
 	return x
 
 module.exports.trackedMin = (a, b, c) ->

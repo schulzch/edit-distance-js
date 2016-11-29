@@ -1,4 +1,4 @@
-{fill, trackedMin} = require './util'
+{zero, trackedMin} = require './util'
 
 #
 # Implements a post-order walk of a given tree.
@@ -90,7 +90,6 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 		n = j - bL[j] + 2
 
 		# Minimize from upper left to lower right (dynamic programming, see paper).
-		fdist = fill(m, n, 0)
 		for a in [1...m] by 1
 			fdist[a][0] = fdist[a - 1][0] + removeCb(aN[a + iOff])
 		for b in [1...n] by 1
@@ -102,8 +101,8 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 						fdist[a - 1][b] + removeCb(aN[a + iOff]),
 						fdist[a][b - 1] + insertCb(bN[b + jOff]),
 						fdist[a - 1][b - 1] + updateCb(aN[a + iOff], bN[b + jOff]))
-					tdist[a + iOff][b + jOff] = fdist[a][b] = min.value
 					ttrack[a + iOff][b + jOff] = min.index
+					tdist[a + iOff][b + jOff] = fdist[a][b] = min.value
 				else
 					p = aL[a + iOff] - 1 - iOff
 					q = bL[b + jOff] - 1 - jOff
@@ -115,8 +114,9 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 
 	tA = preprocess rootA
 	tB = preprocess rootB
-	tdist = fill(tA.nodes.length, tB.nodes.length, 0)
-	ttrack = fill(tA.nodes.length, tB.nodes.length, 0)
+	ttrack = zero tA.nodes.length, tB.nodes.length
+	tdist = zero tA.nodes.length, tB.nodes.length
+	fdist = zero tA.nodes.length + 1, tB.nodes.length + 1
 
 	# Iterate keyroots.
 	for i in tA.keyroots

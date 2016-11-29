@@ -1,4 +1,4 @@
-{fill, trackedMin} = require './util'
+{zero, trackedMin} = require './util'
 
 #
 # Computes the Levenshtein distance (lev).
@@ -19,8 +19,8 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 	a = stringA
 	b = stringB
 
-	dist = fill a.length + 1, b.length + 1, 0
-	track = fill a.length + 1, b.length + 1, 0
+	track = zero a.length + 1, b.length + 1
+	dist = zero a.length + 1, b.length + 1
 	for i in [1..a.length] by 1
 		dist[i][0] = i
 	for j in [1..b.length] by 1
@@ -34,8 +34,8 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 				 dist[i - 1][j] + removeCb(aC),
 				 dist[i][j - 1] + insertCb(bC),
 				 dist[i - 1][j - 1] + updateCb(aC, bC))
-			dist[i][j] = min.value
 			track[i][j] = min.index
+			dist[i][j] = min.value
 
 	return {
 		distance: dist[a.length][b.length]
