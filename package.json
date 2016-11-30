@@ -11,6 +11,7 @@
   },
   "keywords": [
     "string",
+    "levenshtein",
     "tree",
     "edit distance",
     "metric"
