@@ -8,8 +8,6 @@
 
 ## Usage
 
-[Node.js](https://nodejs.org/) and [Require.js](http://requirejs.org/) version:
-
 ```javascript
 var ed = require('edit-distance');
 //Browserify version only, without module loader:
