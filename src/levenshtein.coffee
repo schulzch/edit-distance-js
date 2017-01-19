@@ -52,7 +52,7 @@ alignment = (a, b, track) -> () ->
 	# Backtrack solution from lower right to upper left.
 	i = a.length
 	j = b.length
-	while i > 0 and j > 0
+	while i > 0 or j > 0
 		switch track[i][j]
 			when 0
 				# Remove

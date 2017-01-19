@@ -138,7 +138,7 @@ alignment = (tA, tB, ttrack) -> () ->
 	# Backtrack solution from lower right to upper left.
 	i = tA.nodes.length - 1
 	j = tB.nodes.length - 1
-	while i >= 0 and j >= 0
+	while i >= 0 or j >= 0
 		switch ttrack[i][j]
 			when 0
 				# Remove
