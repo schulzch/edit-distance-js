@@ -38,19 +38,19 @@ describe 'Tree Edit Distance', ->
 	insert = remove = (node) -> 1
 
 	describe 'should be correct', ->
-		shouldBeSymmetrical = (stringA, stringB, expected, expectedMapping) ->
+		shouldBeSymmetrical = (stringA, stringB, expectedDistance, expectedPairs) ->
 			it stringA + " ↔ " + stringB, ->
 				treeA = parseTree stringA
 				treeB = parseTree stringB
 				actualAB = ted(treeA, treeB, children, insert, remove, update)
-				actualAB.distance.should.equal(expected, 'A → B')
+				actualAB.distance.should.equal(expectedDistance, 'A → B')
 				actualBA = ted(treeB, treeA, children, insert, remove, update)
-				actualBA.distance.should.equal(expected, 'B → A')
-				if expectedMapping?
-					actualPairsAB = stringifyPairs actualAB.mapping.pairs()
-					actualPairsBA = stringifyPairs actualBA.mapping.pairs()
-					expectedPairsAB = expectedMapping
-					expectedPairsBA = expectedMapping.map (pair) -> [pair[1], pair[0]]
+				actualBA.distance.should.equal(expectedDistance, 'B → A')
+				if expectedPairs?
+					actualPairsAB = stringifyPairs actualAB.pairs()
+					actualPairsBA = stringifyPairs actualBA.pairs()
+					expectedPairsAB = expectedPairs
+					expectedPairsBA = expectedPairs.map (pair) -> [pair[1], pair[0]]
 					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (mapping)'
 					actualPairsBA.should.deep.equal expectedPairsBA, 'B → A (mapping)'
 

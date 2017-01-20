@@ -122,11 +122,9 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 	for i in tA.keyroots
 		for j in tB.keyroots
 			treeDistance i, j
+	tdistance = tdist[tA.nodes.length - 1][tB.nodes.length - 1]
 
-	return {
-		distance: tdist[tA.nodes.length - 1][tB.nodes.length - 1]
-		mapping: new Mapping(tA, tB, ttrack, tedBt)
-	}
+	return new Mapping tA, tB, tdistance, ttrack, tedBt
 
 #
 # Backtracks the tree-to-tree mapping from lower right to upper left.

@@ -28,9 +28,9 @@ update = function(stringA, stringB) { return stringA !== stringB ? 1 : 0; };
 var stringA = "abcdef";
 var stringB = "abdfgh";
 
-// Compute edit distance and mapping.
+// Compute edit distance, mapping, and alignment.
 var lev = ed.levenshtein(stringA, stringB, insert, remove, update);
-console.log('Levenshtein', lev.distance, lev.mapping.pairs(), lev.mapping.alignment());
+console.log('Levenshtein', lev.distance, lev.pairs(), lev.alignment());
 ```
 
 ### Tree Edit Distance
@@ -46,9 +46,9 @@ var rootA = {id: 1, children: [{id: 2}, {id: 3}]};
 var rootB = {id: 1, children: [{id: 4}, {id: 3}, {id: 5}]};
 var children = function(node) { return node.children; };
 
-// Compute edit distance and mapping.
+// Compute edit distance, mapping, and alignment.
 var ted = ed.ted(rootA, rootB, children, insert, remove, update);
-console.log('Tree Edit Distance', ted.distance, ted.mapping.pairs(), ted.mapping.alignment());
+console.log('Tree Edit Distance', ted.distance, ted.pairs(), ted.alignment());
 ```
 
 ## References

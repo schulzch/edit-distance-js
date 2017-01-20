@@ -36,11 +36,9 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 				 dist[i - 1][j - 1] + updateCb(aC, bC))
 			track[i][j] = min.index
 			dist[i][j] = min.value
+	distance = dist[a.length][b.length]
 
-	return {
-		distance: dist[a.length][b.length]
-		mapping: new Mapping(a, b, track, levenshteinBt)
-	}
+	return new Mapping a, b, distance, track, levenshteinBt
 
 #
 # Backtracks the string-to-string mapping from lower right to upper left.

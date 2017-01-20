@@ -5,7 +5,7 @@
 # compute the aligment.
 #
 module.exports.Mapping = class Mapping
-	constructor: (@a, @b, @track, @backtrackFn) ->
+	constructor: (@a, @b, @distance, @track, @backtrackFn) ->
 		@pairCache = null
 
 	#
