@@ -1,3 +1,36 @@
+#
+# Element-to-element mapping container.
+#
+# This class deferes the backtracking process to compute the mapping and may
+# compute the aligment.
+#
+module.exports.Mapping = class Mapping
+	constructor: (@a, @b, @track, @backtrackFn) ->
+		@pairCache = null
+
+	#
+	# Returns the actual pairs of the mapping.
+	#
+	pairs: =>
+		unless @pairCache?
+			@pairCache = @backtrackFn @a, @b, @track
+		return @pairCache
+
+	#
+	# Returns the alignment
+	#
+	alignment: =>
+		pairs = @pairs()
+		alignmentA = [] # B to A
+		alignmentB = [] # A to B
+		for pair in pairs.reverse()
+			alignmentA.push pair[0]
+			alignmentB.push pair[1]
+		return {
+			alignmentA: alignmentA
+			alignmentB: alignmentB
+		}
+
 module.exports.zero = (width, height) ->
 	x = new Array(width)
 	for i in [0...width] by 1

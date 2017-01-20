@@ -1,4 +1,4 @@
-{zero, trackedMin} = require './util'
+{Mapping, zero, trackedMin} = require './util'
 
 #
 # Implements a post-order walk of a given tree.
@@ -125,17 +125,16 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 
 	return {
 		distance: tdist[tA.nodes.length - 1][tB.nodes.length - 1]
-		alignment: alignment(tA, tB, ttrack)
+		mapping: new Mapping(tA, tB, ttrack, tedBt)
 	}
 
 #
-# Computes the tree alignment and mapping.
+# Computes the tree-to-tree mapping.
 #
-alignment = (tA, tB, ttrack) -> () ->
+# Backtrack solution from lower right to upper left.
+#
+tedBt = (tA, tB, ttrack) ->
 	mapping = []
-	alignmentA = []
-	alignmentB = []
-	# Backtrack solution from lower right to upper left.
 	i = tA.nodes.length - 1
 	j = tB.nodes.length - 1
 	while i >= 0 or j >= 0
@@ -143,26 +142,18 @@ alignment = (tA, tB, ttrack) -> () ->
 			when 0
 				# Remove
 				mapping.push [tA.nodes[i], null]
-				alignmentA[i] = null
 				--i
 			when 1
 				 # Insert
 				mapping.push [null, tB.nodes[j]]
-				alignmentB[j] = null
 				--j
 			when 2 
 				# Update
 				mapping.push [tA.nodes[i], tB.nodes[j]]
-				alignmentA[i] = tB.nodes[j]
-				alignmentB[j] = tA.nodes[i]
 				--i
 				--j
 			else
 				throw new Error "Invalid operation #{ttrack[i][j]} at (#{i}, #{j})"
-	return {
-		mapping: mapping,
-		alignmentA: alignmentA
-		alignmentB: alignmentB
-	}
+	return mapping
 
 module.exports = ted

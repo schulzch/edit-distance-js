@@ -41,14 +41,12 @@ describe 'Tree Edit Distance', ->
 				actualBA = ted(treeB, treeA, children, insert, remove, update)
 				actualBA.distance.should.equal(expected, 'B → A')
 				if expectedMapping?
-					actualMapping = actualAB.alignment().mapping
-					actualMapping.length.should.equal(expectedMapping.length, 'mapping.length')
-					for i in [0...expectedMapping.length]
-						expectedPair = expectedMapping[i]
-						actualPair = actualMapping[i].map (node) -> node?.id ? null
-						should.equal(actualPair[0], expectedPair[0], 'mapping[' + i + '][0]')
-						should.equal(actualPair[1], expectedPair[1], 'mapping[' + i + '][1]')
-
+					actualPairsAB = actualAB.mapping.pairs().map((pair) -> pair.map (node) -> node?.id ? null)
+					actualPairsBA = actualBA.mapping.pairs().map((pair) -> pair.map (node) -> node?.id ? null)
+					expectedPairsAB = expectedMapping
+					expectedPairsBA = expectedMapping.map (pair) -> [pair[1], pair[0]]
+					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (mapping)'
+					actualPairsBA.should.deep.equal expectedPairsBA, 'B → A (mapping)'
 
 		shouldBeSymmetrical "a", "a", 0, [["a", "a"]]
 		shouldBeSymmetrical "a", "b", 1, [["a", "b"]]

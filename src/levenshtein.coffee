@@ -1,4 +1,4 @@
-{zero, trackedMin} = require './util'
+{Mapping, zero, trackedMin} = require './util'
 
 #
 # Computes the Levenshtein distance (lev).
@@ -39,44 +39,35 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 
 	return {
 		distance: dist[a.length][b.length]
-		alignment: alignment(a, b, track)
+		mapping: new Mapping(a, b, track, levenshteinBt)
 	}
 
 #
-# Computes the string alignment and mapping
+# Computes the string-to-string mapping
 #
-alignment = (a, b, track) -> () ->
-	mapping = []
-	alignmentA = []
-	alignmentB = []
-	# Backtrack solution from lower right to upper left.
+# Backtrack solution from lower right to upper left.
+#
+levenshteinBt = (a, b, track) ->
 	i = a.length
 	j = b.length
+	mapping = []
 	while i > 0 or j > 0
 		switch track[i][j]
 			when 0
 				# Remove
 				mapping.push [a[i - 1], null]
-				alignmentA[i - 1] = null
 				--i
 			when 1
 				 # Insert
 				mapping.push [null, b[j - 1]]
-				alignmentB[j - 1] = null
 				--j
 			when 2 
 				# Update
 				mapping.push [a[i - 1], b[j - 1]]
-				alignmentA[i - 1] = b[j - 1]
-				alignmentB[j - 1] = a[i - 1]
 				--i
 				--j
 			else
 				throw new Error "Invalid operation #{track[i][j]} at (#{i}, #{j})"
-	return {
-		mapping: mapping,
-		alignmentA: alignmentA
-		alignmentB: alignmentB
-	}
+	return mapping
 
 module.exports = levenshtein
