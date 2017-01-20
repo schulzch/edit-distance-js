@@ -20,10 +20,12 @@ describe 'Levenshtein Distance', ->
 					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (mapping)'
 					actualPairsBA.should.deep.equal expectedPairsBA, 'B → A (mapping)'
 
-		shouldBeSymmetrical 'a', '', 1 #XXX: broken: , [['a', null]]
+		shouldBeSymmetrical 'a', '', 1, [['a', null]]
+		shouldBeSymmetrical 'ab', '', 2, [['b', null], ['a', null]]
 		shouldBeSymmetrical 'a', 'a', 0, [['a', 'a']]
 		shouldBeSymmetrical 'a', 'b', 1, [['a', 'b']]
 		shouldBeSymmetrical 'a', 'ab', 1, [[null, 'b'], ['a', 'a']]
+		shouldBeSymmetrical 'b', 'abc', 2, [[null, 'c'], ['b', 'b'], [null, 'a']]
 		shouldBeSymmetrical 'ac', 'abc', 1, [['c', 'c'], [null, 'b'], ['a', 'a']]
 		shouldBeSymmetrical 'abc', 'adc', 1, [['c', 'c'], ['b', 'd'], ['a', 'a']]
 

@@ -49,7 +49,7 @@ levenshteinBt = (a, b, track) ->
 	i = a.length
 	j = b.length
 	mapping = []
-	while i > 0 or j > 0
+	while i > 0 and j > 0
 		switch track[i][j]
 			when 0
 				# Remove
@@ -66,6 +66,15 @@ levenshteinBt = (a, b, track) ->
 				--j
 			else
 				throw new Error "Invalid operation #{track[i][j]} at (#{i}, #{j})"
+	# Handle epsilon letters.
+	if i is 0 and j isnt 0
+		while j > 0
+			mapping.push [null, b[j - 1]]
+			--j
+	if i isnt 0 and j is 0
+		while i > 0
+			mapping.push [a[i - 1], null]
+			--i
 	return mapping
 
 module.exports = levenshtein
