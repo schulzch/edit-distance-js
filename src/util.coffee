@@ -31,6 +31,9 @@ module.exports.Mapping = class Mapping
 			alignmentB: alignmentB
 		}
 
+#
+# Returns a zero-filled 2D array.
+#
 module.exports.zero = (width, height) ->
 	x = new Array(width)
 	for i in [0...width] by 1
@@ -39,6 +42,9 @@ module.exports.zero = (width, height) ->
 			y[j] = 0
 	return x
 
+#
+# Computes the minimum of (a, b, c) while
+#
 module.exports.trackedMin = (a, b, c) ->
 	min = {value: a, index: 0 | 0}
 	if b < min.value

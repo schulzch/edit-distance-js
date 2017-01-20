@@ -26,6 +26,12 @@ parseTree = (string) ->
 				tree.id = token
 	return tree
 
+stringifyPairs = (pairs) -> 
+	pairs.map (pair) ->
+		pair.map (node) ->
+			node?.id ? null
+
+
 describe 'Tree Edit Distance', ->
 	children = (node) -> node.children
 	update = (nodeA, nodeB) -> if nodeA.id isnt nodeB.id then 1 else 0
@@ -41,8 +47,8 @@ describe 'Tree Edit Distance', ->
 				actualBA = ted(treeB, treeA, children, insert, remove, update)
 				actualBA.distance.should.equal(expected, 'B → A')
 				if expectedMapping?
-					actualPairsAB = actualAB.mapping.pairs().map((pair) -> pair.map (node) -> node?.id ? null)
-					actualPairsBA = actualBA.mapping.pairs().map((pair) -> pair.map (node) -> node?.id ? null)
+					actualPairsAB = stringifyPairs actualAB.mapping.pairs()
+					actualPairsBA = stringifyPairs actualBA.mapping.pairs()
 					expectedPairsAB = expectedMapping
 					expectedPairsBA = expectedMapping.map (pair) -> [pair[1], pair[0]]
 					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (mapping)'

@@ -1,18 +1,18 @@
 {Mapping, zero, trackedMin} = require './util'
 
 #
-# Computes the Levenshtein distance (lev).
+# Computes the Levenshtein distance.
 #
 # @example
 # var stringA = "abcdef";
 # var stringB = "abdfgh";
 # var insert = remove = function(char) { return 1; };
 # var update = function(charA, charB) { return charA !== charB ? 1 : 0; };
-# distance(stringA, stringB, insert, remove, update);
+# levenshtein(stringA, stringB, insert, remove, update);
 #
 # @see Levenshtein, Vladimir I. "Binary codes capable of correcting deletions,
 # insertions and reversals." Soviet physics doklady. Vol. 10. 1966.
-# @see Wagner, Robert A., and Michael J. Fischer. "The string-to-string 
+# @see Wagner, Robert A., and Michael J. Fischer. "The string-to-string
 # correction problem." Journal of the ACM (JACM) 21.1 (1974): 168-173.
 #
 levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
@@ -43,9 +43,7 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 	}
 
 #
-# Computes the string-to-string mapping
-#
-# Backtrack solution from lower right to upper left.
+# Backtracks the string-to-string mapping from lower right to upper left.
 #
 levenshteinBt = (a, b, track) ->
 	i = a.length
@@ -61,7 +59,7 @@ levenshteinBt = (a, b, track) ->
 				 # Insert
 				mapping.push [null, b[j - 1]]
 				--j
-			when 2 
+			when 2
 				# Update
 				mapping.push [a[i - 1], b[j - 1]]
 				--i

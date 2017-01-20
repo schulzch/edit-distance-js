@@ -1,6 +1,7 @@
 # edit-distance.js [![NPM version](https://badge.fury.io/js/edit-distance.png)](http://badge.fury.io/js/edit-distance) 
 
-`edit-distance.js` computes the [edit distance](https://en.wikipedia.org/wiki/Edit_distance) for strings [1, 2] and trees [3].
+`edit-distance.js` computes the [edit distance](https://en.wikipedia.org/wiki/Edit_distance) for strings [1, 2] and trees [3], i.e.,
+the minimal amount of *insert*, *remove* and *update* operations to transform between *A* and *B* (symmetric).
 
 ## Installation
 
@@ -29,7 +30,7 @@ var stringB = "abdfgh";
 
 // Compute edit distance and mapping.
 var lev = ed.levenshtein(stringA, stringB, insert, remove, update);
-console.log('Levenshtein', lev.distance, lev.mapping.pairs());
+console.log('Levenshtein', lev.distance, lev.mapping.pairs(), lev.mapping.alignment());
 ```
 
 ### Tree Edit Distance
@@ -47,7 +48,7 @@ var children = function(node) { return node.children; };
 
 // Compute edit distance and mapping.
 var ted = ed.ted(rootA, rootB, children, insert, remove, update);
-console.log('Tree Edit Distance', ted.distance, ted.mapping.pairs());
+console.log('Tree Edit Distance', ted.distance, ted.mapping.pairs(), ted.mapping.alignment());
 ```
 
 ## References

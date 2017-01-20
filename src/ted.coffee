@@ -34,7 +34,7 @@ postOrderWalk = (root, childrenCb, visitCb) ->
 # var children = function(node) { return node.children; };
 # var insert = remove = function(node) { return 1; };
 # var update = function(nodeA, nodeB) { return nodeA.id !== nodeB.id ? 1 : 0; };
-# distance(rootA, rootB, children, insert, remove, update);
+# ted(rootA, rootB, children, insert, remove, update);
 #
 # @see Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the
 # editing distance between trees and related problems." SIAM journal on
@@ -129,9 +129,7 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 	}
 
 #
-# Computes the tree-to-tree mapping.
-#
-# Backtrack solution from lower right to upper left.
+# Backtracks the tree-to-tree mapping from lower right to upper left.
 #
 tedBt = (tA, tB, ttrack) ->
 	mapping = []
@@ -147,7 +145,7 @@ tedBt = (tA, tB, ttrack) ->
 				 # Insert
 				mapping.push [null, tB.nodes[j]]
 				--j
-			when 2 
+			when 2
 				# Update
 				mapping.push [tA.nodes[i], tB.nodes[j]]
 				--i
