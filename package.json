@@ -1,6 +1,6 @@
 {
   "name": "edit-distance",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "String and tree edit distance",
   "main": "./lib/index.js",
   "scripts": {
@@ -13,15 +13,19 @@
     "string",
     "levenshtein",
     "tree",
-    "edit distance",
+    "zhang-shasha",
+    "edit",
+    "distance",
+    "similarity",
+    "algorithm",
     "metric"
   ],
   "devDependencies": {
-    "browserify": "^13.1.1",
+    "browserify": "^13.3.0",
     "chai": "^3.5.0",
-    "coffee-script": "^1.11.1",
+    "coffee-script": "^1.12.2",
     "marked": "^0.3.6",
-    "mocha": "^3.1.2"
+    "mocha": "^3.2.0"
   },
   "author": "Christoph Schulz <schulzcbs@gmail.com>",
   "license": "Apache-2.0",
