@@ -150,6 +150,15 @@ tedBt = (tA, tB, ttrack) ->
 				--j
 			else
 				throw new Error "Invalid operation #{ttrack[i][j]} at (#{i}, #{j})"
+	# Handle epsilon nodes.
+	if i is -1 and j isnt -1
+		while j >= 0
+			mapping.push [null, tB.nodes[j]]
+			--j
+	if i isnt -1 and j is -1
+		while i >= 0
+			mapping.push [tA.nodes[i], null]
+			--i
 	return mapping
 
 module.exports = ted

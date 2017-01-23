@@ -29,7 +29,7 @@ parseTree = (string) ->
 #
 # Stringify a set node-node pairs to id-id pairs.
 #
-stringifyPairs = (pairs) -> 
+stringifyPairs = (pairs) ->
 	pairs.map (pair) ->
 		pair.map (node) ->
 			node?.id ? null
@@ -59,20 +59,22 @@ describe 'Tree Edit Distance', ->
 		shouldBeSymmetrical "a", "a", 0, [["a", "a"]]
 		shouldBeSymmetrical "a", "b", 1, [["a", "b"]]
 		shouldBeSymmetrical "(b)a", "b", 1, [["a", null], ["b", "b"]]
-		shouldBeSymmetrical "(b,c)a", "b", 2 #TODO: test other mappings.
-		shouldBeSymmetrical "(b,c)a", "(c)b", 2
-		shouldBeSymmetrical "((c)b,d)a", "(c,(d)a)b", 3
-		shouldBeSymmetrical "((c,d)b)a", "(c,d)a", 1
-		shouldBeSymmetrical "((c,(e,f)d)b)a", "(c,e,f)a", 2
-		shouldBeSymmetrical "((c,(e,f)d)b)a", "(c,(e,f)d)b", 1
-		shouldBeSymmetrical "((c,(e,f)d)b,x)a", "(c,(e,f)d)b", 2
-		shouldBeSymmetrical "(b,(d,e)c)a", "((c)b,d,e)a", 2
-		shouldBeSymmetrical "((a,a)a)a", "((a)a)a", 1
-		shouldBeSymmetrical "((d,e)b,c)a", "((h,i)g,k)f", 5
-		shouldBeSymmetrical "((c,(e,f)d)b)a", "(c,e,f)b", 2
-		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,e)f", 2
-		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,x)f", 3
-		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d,e)c)f", 2
+		shouldBeSymmetrical "(b,c)a", "a", 2, [["a", "a"], ["c", null], ["b", null]]
+		shouldBeSymmetrical "(c,b)a", "b", 2, [["a", null], ["b", "b"], ["c", null]]
+		shouldBeSymmetrical "(b,c)a", "b", 2, [["a", null], ["c", "b"], ["b", null]]
+		shouldBeSymmetrical "(b,c)a", "(c)b", 2, [["a", "b"], ["c", "c"], ["b", null]]
+		shouldBeSymmetrical "((c)b,d)a", "(c,(d)a)b", 3, [["a", "b"], [null, "a"], ["d", "d"], ["b", null], ["c", "c"]]
+		shouldBeSymmetrical "((c,d)b)a", "(c,d)a", 1, [["a", "a"], ["b", null], ["d", "d"], ["c", "c"]]
+		shouldBeSymmetrical "((c,(e,f)d)b)a", "(c,e,f)a", 2, [["a", "a"], ["b", null], ["d", null], ["f", "f"], ["e", "e"], ["c", "c"]]
+		shouldBeSymmetrical "((c,(e,f)d)b)a", "(c,(e,f)d)b", 1, [["a", null], ["b", "b"], ["d", "d"], ["f", "f"], ["e", "e"], ["c", "c"]]
+		shouldBeSymmetrical "((c,(e,f)d)b,x)a", "(c,(e,f)d)b", 2, [["a", null], [null, "b"], [null, "d"], ["x", "f"], ["b", null], ["d", null], ["f", "e"], ["e", "c"], ["c", null]]
+		shouldBeSymmetrical "(b,(d,e)c)a", "((c)b,d,e)a", 2, [["a", "a"], ["c", null], ["e", "e"], ["d", "d"], ["b", "b"], [null, "c"]]
+		shouldBeSymmetrical "((a,a)a)a", "((a)a)a", 1, [["a", "a"], ["a", "a"], ["a", "a"], ["a", null]]
+		shouldBeSymmetrical "((d,e)b,c)a", "((h,i)g,k)f", 5, [["a", "f"], ["c", "k"], ["b", "g"], ["e", "i"], ["d", "h"]]
+		shouldBeSymmetrical "((c,(e,f)d)b)a", "(c,e,f)b", 2, [["a", null], ["b", "b"], ["d", null], ["f", "f"], ["e", "e"], ["c", "c"]]
+		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,e)f", 2, [["f", "f"], ["e", "e"], [null, "c"], ["d", "d"], ["c", null], ["b", "b"], ["a", "a"]]
+		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,x)f", 3, [["f", "f"], ["e", "x"], [null, "c"], ["d", "d"], ["c", null], ["b", "b"], ["a", "a"]]
+		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d,e)c)f", 2, [["f", "f"], [null, "c"], ["e", "e"], ["d", "d"], ["c", null], ["b", "b"], ["a", "a"]]
 
 	describeBenchmark = if process.env.BENCHMARK then describe else describe.skip
 	describeBenchmark 'should be performant', ->
