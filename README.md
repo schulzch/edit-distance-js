@@ -1,9 +1,13 @@
 # edit-distance.js [![NPM version](https://badge.fury.io/js/edit-distance.png)](http://badge.fury.io/js/edit-distance) 
 
-`edit-distance.js` computes the [edit distance](https://en.wikipedia.org/wiki/Edit_distance) for strings [1, 2] and trees [3], i.e.,
-the minimal amount of *insert*, *remove* and *update* operations to transform between *A* and *B* (symmetric).
+`edit-distance.js` computes the [edit distance](https://en.wikipedia.org/wiki/Edit_distance) for strings [1, 2] and trees [3].
+
+It computes the plain edit distance (number), as well as the mapping (pairs), and alignment (sequences).
+The edit distance is defined as the minimum number of *insert*, *remove*, and *update* operations to transform between *A* and *B* (symmetric).
 
 ## Installation
+
+Download a [release](https://github.com/schulzch/edit-distance-js/releases) or:
 
     $ npm install edit-distance 
 
@@ -14,7 +18,6 @@ var ed = require('edit-distance');
 //Browserify version only, without module loader:
 //var ed = global.editDistance;
 ```
-
 
 ### Levenshtein Distance
 
@@ -58,6 +61,10 @@ console.log('Tree Edit Distance', ted.distance, ted.pairs(), ted.alignment());
 [2] Wagner, Robert A., and Michael J. Fischer. "The string-to-string correction problem." Journal of the ACM (JACM) 21.1 (1974): 168-173.
 
 [3] Zhang, Kaizhong, and Dennis Shasha. "Simple fast algorithms for the editing distance between trees and related problems." SIAM journal on computing 18.6 (1989): 1245-1262.
+
+## Versioning
+
+This project is maintained under the [Semantic Versioning](http://semver.org/) guidelines.
 
 ## License
 

@@ -26,11 +26,13 @@ parseTree = (string) ->
 				tree.id = token
 	return tree
 
+#
+# Stringify a set node-node pairs to id-id pairs.
+#
 stringifyPairs = (pairs) -> 
 	pairs.map (pair) ->
 		pair.map (node) ->
 			node?.id ? null
-
 
 describe 'Tree Edit Distance', ->
 	children = (node) -> node.children
@@ -43,16 +45,16 @@ describe 'Tree Edit Distance', ->
 				treeA = parseTree stringA
 				treeB = parseTree stringB
 				actualAB = ted(treeA, treeB, children, insert, remove, update)
-				actualAB.distance.should.equal(expectedDistance, 'A → B')
+				actualAB.distance.should.equal(expectedDistance, 'A → B (distance)')
 				actualBA = ted(treeB, treeA, children, insert, remove, update)
-				actualBA.distance.should.equal(expectedDistance, 'B → A')
+				actualBA.distance.should.equal(expectedDistance, 'B → A (distance)')
+				actualPairsAB = stringifyPairs actualAB.pairs()
+				actualPairsBA = stringifyPairs actualBA.pairs()
 				if expectedPairs?
-					actualPairsAB = stringifyPairs actualAB.pairs()
-					actualPairsBA = stringifyPairs actualBA.pairs()
 					expectedPairsAB = expectedPairs
 					expectedPairsBA = expectedPairs.map (pair) -> [pair[1], pair[0]]
-					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (mapping)'
-					actualPairsBA.should.deep.equal expectedPairsBA, 'B → A (mapping)'
+					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (pairs)'
+					actualPairsBA.should.deep.equal expectedPairsBA, 'B → A (pairs)'
 
 		shouldBeSymmetrical "a", "a", 0, [["a", "a"]]
 		shouldBeSymmetrical "a", "b", 1, [["a", "b"]]

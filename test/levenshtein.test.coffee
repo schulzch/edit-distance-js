@@ -12,13 +12,13 @@ describe 'Levenshtein Distance', ->
 				actualAB.distance.should.equal(expectedDistance, 'A → B (distance)')
 				actualBA = levenshtein(stringB, stringA, insert, remove, update)
 				actualBA.distance.should.equal(expectedDistance, 'B → A (distance)')
+				actualPairsAB = actualAB.pairs()
+				actualPairsBA = actualBA.pairs()
 				if expectedMapping?
-					actualPairsAB = actualAB.pairs()
-					actualPairsBA = actualBA.pairs()
 					expectedPairsAB = expectedMapping
 					expectedPairsBA = expectedMapping.map (pair) -> [pair[1], pair[0]]
-					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (mapping)'
-					actualPairsBA.should.deep.equal expectedPairsBA, 'B → A (mapping)'
+					actualPairsAB.should.deep.equal expectedPairsAB, 'A → B (pairs)'
+					actualPairsBA.should.deep.equal expectedPairsBA, 'B → A (pairs)'
 
 		shouldBeSymmetrical 'a', '', 1, [['a', null]]
 		shouldBeSymmetrical 'ab', '', 2, [['b', null], ['a', null]]

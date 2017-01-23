@@ -1,5 +1,6 @@
 # Compiled code
 lib/*.js
+edit-distance.js
 
 # Logs
 logs
