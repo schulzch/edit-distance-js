@@ -1,6 +1,6 @@
 {
   "name": "edit-distance",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "String and tree edit distance",
   "main": "./lib/index.js",
   "scripts": {
@@ -29,12 +29,12 @@
   },
   "author": "Christoph Schulz <schulzcbs@gmail.com>",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/schulzch/edit-distance",
+  "homepage": "https://github.com/schulzch/edit-distance-js",
   "bugs": {
-    "url": "https://github.com/schulzch/edit-distance/issues"
+    "url": "https://github.com/schulzch/edit-distance-js/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/schulzch/edit-distance.git"
+    "url": "git://github.com/schulzch/edit-distance-js.git"
   }
 }
