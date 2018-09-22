@@ -75,6 +75,8 @@ describe 'Tree Edit Distance', ->
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,e)f", 2, [["f", "f"], ["e", "e"], [null, "c"], ["d", "d"], ["c", null], ["b", "b"], ["a", "a"]]
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d)c,x)f", 3, [["f", "f"], ["e", "x"], [null, "c"], ["d", "d"], ["c", null], ["b", "b"], ["a", "a"]]
 		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d,e)c)f", 2, [["f", "f"], [null, "c"], ["e", "e"], ["d", "d"], ["c", null], ["b", "b"], ["a", "a"]]
+		shouldBeSymmetrical "((a,(b)c)d,e)f", "(((a,b)d,e)c)f", 2, [["f", "f"], [null, "c"], ["e", "e"], ["d", "d"], ["c", null], ["b", "b"], ["a", "a"]]
+		shouldBeSymmetrical "((a,b,(c,d)e,f,g,(h,(i)j)k,l)m)n", "((a,b,(c,d)e,f,g,(h,(i)x)k,l)m)n", 1, [["n", "n"], ["m", "m"], ["l", "l"], ["k", "k"], ["j", "x"], ["i", "i"], ["h", "h"], ["g", "g"], ["f", "f"], ["e", "e"], ["d", "d"], ["c", "c"], ["b", "b"], ["a", "a"]]
 
 	describeBenchmark = if process.env.BENCHMARK then describe else describe.skip
 	describeBenchmark 'should be performant', ->
