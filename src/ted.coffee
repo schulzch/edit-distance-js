@@ -74,8 +74,6 @@ ted = (rootA, rootB, childrenCb, insertCb, removeCb, updateCb) ->
 				t.keyroots.push nIndex
 			return
 
-		t.keyroots.sort()
-
 		return t
 
 	treeDistance = (i, j) ->
