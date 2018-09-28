@@ -1,2 +1,0 @@
---require ./node_modules/coffee-script/register
---compilers coffee:coffee-script/register
