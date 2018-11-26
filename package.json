@@ -1,6 +1,6 @@
 {
   "name": "edit-distance",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "String and tree edit distance",
   "main": "./dist/index.js",
   "scripts": {
