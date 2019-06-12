@@ -7,7 +7,7 @@ The edit distance is defined as the minimum number of *insert*, *remove*, and *u
 
 ## Installation
 
-Download a [release](https://github.com/schulzch/edit-distance-js/releases) or:
+Download a [release](https://github.com/schulzch/edit-distance-js/releases) (browserfied version) or:
 
     $ npm install edit-distance 
 
@@ -15,8 +15,9 @@ Download a [release](https://github.com/schulzch/edit-distance-js/releases) or:
 
 ```javascript
 var ed = require('edit-distance');
-//Browserify version only, without module loader:
-//var ed = global.editDistance;
+//Browserfied version:
+//<script src="edit-distance.js"></script>
+//<script>var ed = global.editDistance;</script>
 ```
 
 ### Levenshtein Distance
