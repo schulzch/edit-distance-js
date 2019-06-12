@@ -24,8 +24,8 @@
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "coffeescript": "^1.12.2",
-    "marked": "^0.5.1",
-    "mocha": "^5.2.0"
+    "marked": "^0.6.2",
+    "mocha": "^6.1.4"
   },
   "author": "Christoph Schulz <schulzcbs@gmail.com>",
   "license": "Apache-2.0",
