@@ -28,8 +28,8 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 
 	for i in [1..a.length] by 1
 		for j in [1..b.length] by 1
-			aC = a.charAt(i - 1)
-			bC = b.charAt(j - 1)
+			aC = a[i - 1]
+			bC = b[j - 1]
 			min = trackedMin(
 				 dist[i - 1][j] + removeCb(aC),
 				 dist[i][j - 1] + insertCb(bC),
