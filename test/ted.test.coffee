@@ -75,11 +75,12 @@ describe 'Tree Edit Distance', ->
 		data = fs.readFileSync __dirname + '/data/apted_correctness_test_cases.json', 'utf8', (err, data) ->
 		testCases = JSON.parse data
 		for testCase in testCases
-			it "Test " + testCase.testID, ->
-				tree1 = parseBracketTree testCase.t1
-				tree2 = parseBracketTree testCase.t2
-				actual12 = ted(tree1, tree2, children, insert, remove, update)
-				actual12.distance.should.equal(testCase.d, 'T1 → T2 (distance)')
+			do (testCase) ->
+				it "Test " + testCase.testID, ->
+					tree1 = parseBracketTree testCase.t1
+					tree2 = parseBracketTree testCase.t2
+					actual12 = ted(tree1, tree2, children, insert, remove, update)
+					actual12.distance.should.equal(testCase.d, 'T1 → T2 (distance)')
 
 	describe 'should be correct (basic symmetries)', ->
 		shouldBeSymmetrical = (stringA, stringB, expectedDistance, expectedPairs) ->
