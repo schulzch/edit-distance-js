@@ -5,7 +5,7 @@ fs = require 'fs'
 #
 # Parse a tree in post-order Newick-style format.
 #
-parseTree = (string) ->
+parseNewickTree = (string) ->
 	ancestors = []
 	tree = subtree = {}
 	tokens = string.split /\s*(\(|\)|,)\s*/
@@ -27,6 +27,38 @@ parseTree = (string) ->
 	return tree
 
 #
+# Parse a tree in pre-order Bracket-style format.
+#
+parseBracketTree = (string) ->
+	tree = {}
+	string = string.substring string.indexOf('{') + 1, string.lastIndexOf('}')
+	end = string.indexOf('{')
+	tree = {
+		id: string.substring 0, if end isnt -1 then end else string.length
+		children: []
+	}
+	if end isnt -1
+		brackets = 0
+		bracketStart = -1
+		pos = end
+		while pos < string.length
+			switch string[pos]
+				when '{'
+					if brackets is 0
+						bracketStart = pos
+					brackets += 1
+				when '}'
+					brackets -= 1
+					if brackets is 0
+						substring = string.substring bracketStart, pos + 1
+						tree.children.push parseBracketTree(substring)
+						break
+			pos += 1
+		if brackets isnt 0
+			throw new Error 'Unbalanced brackets found "' + string + '"'
+	return tree
+
+#
 # Stringify a set node-node pairs to id-id pairs.
 #
 stringifyPairs = (pairs) ->
@@ -39,11 +71,21 @@ describe 'Tree Edit Distance', ->
 	update = (nodeA, nodeB) -> if nodeA.id isnt nodeB.id then 1 else 0
 	insert = remove = (node) -> 1
 
-	describe 'should be correct', ->
+	describe 'should be correct (APTED)', ->
+		data = fs.readFileSync __dirname + '/data/apted_correctness_test_cases.json', 'utf8', (err, data) ->
+		testCases = JSON.parse data
+		for testCase in testCases
+			it "Test " + testCase.testID, ->
+				tree1 = parseBracketTree testCase.t1
+				tree2 = parseBracketTree testCase.t2
+				actual12 = ted(tree1, tree2, children, insert, remove, update)
+				actual12.distance.should.equal(testCase.d, 'T1 → T2 (distance)')
+
+	describe 'should be correct (basic symmetries)', ->
 		shouldBeSymmetrical = (stringA, stringB, expectedDistance, expectedPairs) ->
 			it stringA + " ↔ " + stringB, ->
-				treeA = parseTree stringA
-				treeB = parseTree stringB
+				treeA = parseNewickTree stringA
+				treeB = parseNewickTree stringB
 				actualAB = ted(treeA, treeB, children, insert, remove, update)
 				actualAB.distance.should.equal(expectedDistance, 'A → B (distance)')
 				actualBA = ted(treeB, treeA, children, insert, remove, update)
@@ -87,10 +129,10 @@ describe 'Tree Edit Distance', ->
 		before (done) ->
 			fs.readFile __dirname + '/data/ncbi-taxonomy.tre', 'utf8', (err, data) ->
 				throw err if err?
-				ncbiTree = parseTree data
+				ncbiTree = parseNewickTree data
 				done()
 
 		it 'NCBI taxonomy', ->
-			otherTree = parseTree "a"
+			otherTree = parseNewickTree "a"
 			expected = ted(ncbiTree, otherTree, children, insert, remove, update)
 			expected.distance.should.equal 311349
