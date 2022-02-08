@@ -1,6 +1,6 @@
 {
   "name": "edit-distance",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "String and tree edit distance",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,9 +23,9 @@
   "devDependencies": {
     "browserify": "^17.0.0",
     "chai": "^4.2.0",
-    "coffeescript": "^1.12.7",
-    "marked": "^2.0.0",
-    "mocha": "^8.1.3"
+    "coffeescript": "^2.6.1",
+    "marked": "^4.0.12",
+    "mocha": "^9.2.0"
   },
   "author": "Christoph Schulz <schulzcbs@gmail.com>",
   "license": "Apache-2.0",

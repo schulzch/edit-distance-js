@@ -31,9 +31,9 @@ levenshtein = (stringA, stringB, insertCb, removeCb, updateCb) ->
 			aC = a[i - 1]
 			bC = b[j - 1]
 			min = trackedMin(
-				 dist[i - 1][j] + removeCb(aC),
-				 dist[i][j - 1] + insertCb(bC),
-				 dist[i - 1][j - 1] + updateCb(aC, bC))
+				dist[i - 1][j] + removeCb(aC),
+				dist[i][j - 1] + insertCb(bC),
+				dist[i - 1][j - 1] + updateCb(aC, bC))
 			track[i][j] = min.index
 			dist[i][j] = min.value
 	distance = dist[a.length][b.length]
